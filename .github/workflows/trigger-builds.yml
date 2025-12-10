@@ -1,0 +1,83 @@
+name: Trigger Docker Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Image to build (leave empty for all)'
+        required: false
+        default: ''
+      rerun_failed:
+        description: 'Rerun failed builds only'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  trigger-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub CLI
+        run: |
+          gh auth status
+        env:
+          GH_TOKEN: ${{ secrets.TRIGGER_TOKEN }}
+
+      - name: Trigger builds
+        env:
+          GH_TOKEN: ${{ secrets.TRIGGER_TOKEN }}
+          IMAGE: ${{ github.event.inputs.image }}
+          RERUN_FAILED: ${{ github.event.inputs.rerun_failed }}
+        run: |
+          ORG="gsmlg-ci"
+
+          # All Docker image repositories
+          IMAGES=(
+            alpine antlr baidupcs-go build-base caddy code-server
+            couch-alpine couchdb curl daedalos dell-openmanage dell-poweredge
+            devdocs echo editor-server geoip2 go-ethereum keycloak
+            kubectl log-forwarder mariadb meshcentral nginx nix-builder
+            openssl openwrt phoenix python rabbitmq semantic-release
+            snapdrop squid stunnel svg-autocrop tinyproxy unbound
+            varnish zerotier zerotier-ui
+          )
+
+          trigger_build() {
+            local image=$1
+            echo "Processing $image..."
+
+            # Try workflow_dispatch first
+            if gh workflow run build.yml --repo "${ORG}/${image}" 2>/dev/null; then
+              echo "  Triggered via workflow_dispatch"
+              return 0
+            fi
+
+            # If rerun_failed is set, try to rerun failed workflow
+            if [ "$RERUN_FAILED" = "true" ]; then
+              run_id=$(gh run list --repo "${ORG}/${image}" --limit 1 --json databaseId,conclusion --jq '.[0] | select(.conclusion == "failure") | .databaseId' 2>/dev/null || true)
+              if [ -n "$run_id" ]; then
+                if gh run rerun "$run_id" --repo "${ORG}/${image}" 2>/dev/null; then
+                  echo "  Reran failed workflow $run_id"
+                  return 0
+                fi
+              fi
+            fi
+
+            echo "  Skipped (no workflow_dispatch trigger, push to repo to build)"
+            return 0
+          }
+
+          if [ -n "$IMAGE" ]; then
+            trigger_build "$IMAGE"
+          else
+            echo "Triggering builds for ${#IMAGES[@]} images..."
+            for image in "${IMAGES[@]}"; do
+              trigger_build "$image"
+            done
+          fi
+
+          echo ""
+          echo "Done! Check build status at: https://github.com/orgs/${ORG}/actions"
