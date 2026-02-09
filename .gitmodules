@@ -1,0 +1,117 @@
+[submodule "repos/alpine"]
+	path = repos/alpine
+	url = https://github.com/gsmlg-ci/alpine.git
+[submodule "repos/antlr"]
+	path = repos/antlr
+	url = https://github.com/gsmlg-ci/antlr.git
+[submodule "repos/baidupcs-go"]
+	path = repos/baidupcs-go
+	url = https://github.com/gsmlg-ci/baidupcs-go.git
+[submodule "repos/build-base"]
+	path = repos/build-base
+	url = https://github.com/gsmlg-ci/build-base.git
+[submodule "repos/caddy"]
+	path = repos/caddy
+	url = https://github.com/gsmlg-ci/caddy.git
+[submodule "repos/code-server"]
+	path = repos/code-server
+	url = https://github.com/gsmlg-ci/code-server.git
+[submodule "repos/couch-alpine"]
+	path = repos/couch-alpine
+	url = https://github.com/gsmlg-ci/couch-alpine.git
+[submodule "repos/couchdb"]
+	path = repos/couchdb
+	url = https://github.com/gsmlg-ci/couchdb.git
+[submodule "repos/curl"]
+	path = repos/curl
+	url = https://github.com/gsmlg-ci/curl.git
+[submodule "repos/daedalos"]
+	path = repos/daedalos
+	url = https://github.com/gsmlg-ci/daedalos.git
+[submodule "repos/dell-openmanage"]
+	path = repos/dell-openmanage
+	url = https://github.com/gsmlg-ci/dell-openmanage.git
+[submodule "repos/dell-poweredge"]
+	path = repos/dell-poweredge
+	url = https://github.com/gsmlg-ci/dell-poweredge.git
+[submodule "repos/echo"]
+	path = repos/echo
+	url = https://github.com/gsmlg-ci/echo.git
+[submodule "repos/geoip2"]
+	path = repos/geoip2
+	url = https://github.com/gsmlg-ci/geoip2.git
+[submodule "repos/go-ethereum"]
+	path = repos/go-ethereum
+	url = https://github.com/gsmlg-ci/go-ethereum.git
+[submodule "repos/keycloak"]
+	path = repos/keycloak
+	url = https://github.com/gsmlg-ci/keycloak.git
+[submodule "repos/kubectl"]
+	path = repos/kubectl
+	url = https://github.com/gsmlg-ci/kubectl.git
+[submodule "repos/log-forwarder"]
+	path = repos/log-forwarder
+	url = https://github.com/gsmlg-ci/log-forwarder.git
+[submodule "repos/mariadb"]
+	path = repos/mariadb
+	url = https://github.com/gsmlg-ci/mariadb.git
+[submodule "repos/meshcentral"]
+	path = repos/meshcentral
+	url = https://github.com/gsmlg-ci/meshcentral.git
+[submodule "repos/nix-builder"]
+	path = repos/nix-builder
+	url = https://github.com/gsmlg-ci/nix-builder.git
+[submodule "repos/openssl"]
+	path = repos/openssl
+	url = https://github.com/gsmlg-ci/openssl.git
+[submodule "repos/openwrt"]
+	path = repos/openwrt
+	url = https://github.com/gsmlg-ci/openwrt.git
+[submodule "repos/phoenix"]
+	path = repos/phoenix
+	url = https://github.com/gsmlg-ci/phoenix.git
+[submodule "repos/python"]
+	path = repos/python
+	url = https://github.com/gsmlg-ci/python.git
+[submodule "repos/rabbitmq"]
+	path = repos/rabbitmq
+	url = https://github.com/gsmlg-ci/rabbitmq.git
+[submodule "repos/semantic-release"]
+	path = repos/semantic-release
+	url = https://github.com/gsmlg-ci/semantic-release.git
+[submodule "repos/snapdrop"]
+	path = repos/snapdrop
+	url = https://github.com/gsmlg-ci/snapdrop.git
+[submodule "repos/squid"]
+	path = repos/squid
+	url = https://github.com/gsmlg-ci/squid.git
+[submodule "repos/stunnel"]
+	path = repos/stunnel
+	url = https://github.com/gsmlg-ci/stunnel.git
+[submodule "repos/svg-autocrop"]
+	path = repos/svg-autocrop
+	url = https://github.com/gsmlg-ci/svg-autocrop.git
+[submodule "repos/tinyproxy"]
+	path = repos/tinyproxy
+	url = https://github.com/gsmlg-ci/tinyproxy.git
+[submodule "repos/unbound"]
+	path = repos/unbound
+	url = https://github.com/gsmlg-ci/unbound.git
+[submodule "repos/varnish"]
+	path = repos/varnish
+	url = https://github.com/gsmlg-ci/varnish.git
+[submodule "repos/zerotier"]
+	path = repos/zerotier
+	url = https://github.com/gsmlg-ci/zerotier.git
+[submodule "repos/zerotier-ui"]
+	path = repos/zerotier-ui
+	url = https://github.com/gsmlg-ci/zerotier-ui.git
+[submodule "repos/devdocs"]
+	path = repos/devdocs
+	url = https://github.com/gsmlg-ci/devdocs.git
+[submodule "repos/nginx"]
+	path = repos/nginx
+	url = https://github.com/gsmlg-ci/nginx.git
+[submodule "repos/editor-server"]
+	path = repos/editor-server
+	url = https://github.com/gsmlg-ci/editor-server.git
