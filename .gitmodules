@@ -115,3 +115,6 @@
 [submodule "repos/editor-server"]
 	path = repos/editor-server
 	url = https://github.com/gsmlg-ci/editor-server.git
+[submodule "repos/pac-server"]
+	path = repos/pac-server
+	url = https://github.com/gsmlg-ci/pac-server.git

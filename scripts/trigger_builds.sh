@@ -13,14 +13,14 @@ IMAGES=(
   couch-alpine couchdb curl daedalos dell-openmanage dell-poweredge
   devdocs echo editor-server geoip2 go-ethereum keycloak
   kubectl log-forwarder mariadb meshcentral nginx nix-builder
-  openssl openwrt phoenix python rabbitmq semantic-release
+  openssl openwrt pac-server phoenix python rabbitmq semantic-release
   snapdrop squid stunnel svg-autocrop tinyproxy unbound
   varnish zerotier zerotier-ui
 )
 
 # Images that support workflow_dispatch (can be triggered manually)
 DISPATCHABLE=(
-  alpine antlr caddy code-server phoenix
+  alpine antlr caddy code-server pac-server phoenix
 )
 
 trigger_build() {
