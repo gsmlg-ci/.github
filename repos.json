@@ -1,0 +1,697 @@
+[
+  {
+    "name": "alpine",
+    "workflow": {
+      "name": "docker-buildimage-alpine",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["ALPINE_VERSION=${{ github.event.inputs.version }}"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:${ALPINE_VERSION}"],
+    "tags": [
+      "docker.io/gsmlg/alpine:${{ github.event.inputs.version }}",
+      "ghcr.io/gsmlg-dev/alpine:${{ github.event.inputs.version }}"
+    ]
+  },
+  {
+    "name": "antlr",
+    "workflow": {
+      "name": "docker-buildimage-antlr",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["openjdk:11"],
+    "tags": [
+      "docker.io/gsmlg/antlr:latest",
+      "ghcr.io/gsmlg-dev/antlr:latest"
+    ]
+  },
+  {
+    "name": "baidupcs-go",
+    "workflow": {
+      "name": "docker-buildimage-baidupcs-go",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["GO111MODULE=on", "VERSION=${{ github.event.inputs.version }}"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["golang:alpine", "ghcr.io/gsmlg-dev/alpine:3.22"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/baidupcs-go:${{ github.event.inputs.version }}",
+      "ghcr.io/gsmlg-dev/baidupcs-go:latest"
+    ]
+  },
+  {
+    "name": "build-base",
+    "workflow": {
+      "name": "docker-buildimage-build-base",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:24.04"],
+    "tags": [
+      "docker.io/gsmlg/build-base:latest",
+      "docker.io/gsmlg/build-base:24.04",
+      "docker.io/gsmlg/build-base:noble"
+    ]
+  },
+  {
+    "name": "caddy",
+    "workflow": {
+      "name": "docker-buildimage-caddy",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "CADDY_VERSION=${{ needs.setup-caddy-version.outputs.caddy_version }}",
+        "CADDY_WITH=${{ needs.setup-caddy-version.outputs.caddy_with }}",
+        "USER=${{ secrets.GIT_USER_ID }}",
+        "TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}",
+        "GOPRIVATE=github.com/gsmlg-dev,gsmlg.dev",
+        "CGO_ENABLED=0"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["caddy:builder-alpine", "caddy:alpine"],
+    "tags": [
+      "docker.io/gsmlg/caddy:v${{ needs.setup-caddy-version.outputs.version }}",
+      "docker.io/gsmlg/caddy:latest",
+      "ghcr.io/gsmlg-dev/caddy:v${{ needs.setup-caddy-version.outputs.version }}",
+      "ghcr.io/gsmlg-dev/caddy:latest"
+    ]
+  },
+  {
+    "name": "code-server",
+    "workflow": {
+      "name": "docker-buildimage-code-server",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "VERSION=${{ needs.get-latest-version.outputs.version }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:24.04"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/code-server:v${{ needs.get-latest-version.outputs.version }}",
+      "ghcr.io/gsmlg-dev/code-server:latest",
+      "docker.io/gsmlg/code-server:v${{ needs.get-latest-version.outputs.version }}",
+      "docker.io/gsmlg/code-server:latest"
+    ]
+  },
+  {
+    "name": "couch-alpine",
+    "workflow": {
+      "name": "docker-buildimage-couch-alpine",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "${{ matrix.platform }}",
+      "build_args": ["VERSION=3.4.2"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["erlang:26-alpine", "alpine:3.20"],
+    "tags": [
+      "docker.io/gsmlg/couchdb:alpine",
+      "ghcr.io/gsmlg-dev/couchdb:alpine"
+    ]
+  },
+  {
+    "name": "couchdb",
+    "workflow": {
+      "name": "docker-buildimage-couchdb",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["VERSION=3"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["couchdb:$VERSION"],
+    "tags": [
+      "docker.io/gsmlg/couchdb:3",
+      "docker.io/gsmlg/couchdb:latest",
+      "ghcr.io/gsmlg-dev/couchdb:3",
+      "ghcr.io/gsmlg-dev/couchdb:latest"
+    ]
+  },
+  {
+    "name": "curl",
+    "workflow": {
+      "name": "docker-buildimage-curl",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/curl:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/curl:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/curl:latest",
+      "docker.io/gsmlg/curl:latest"
+    ]
+  },
+  {
+    "name": "daedalos",
+    "workflow": {
+      "name": "docker-buildimage-daedalos",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["node:lts-alpine"],
+    "tags": [
+      "docker.io/gsmlg/daedalos:latest",
+      "ghcr.io/gsmlg-dev/daedalos:latest"
+    ]
+  },
+  {
+    "name": "dell-openmanage",
+    "workflow": {
+      "name": "docker-buildimage-dell-openmanage",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["centos:7.6.1810"],
+    "tags": [
+      "docker.io/gsmlg/dell-openmanage:v9.5.0",
+      "docker.io/gsmlg/dell-openmanage:latest"
+    ]
+  },
+  {
+    "name": "dell-poweredge",
+    "workflow": {
+      "name": "docker-buildimage-dell-poweredge",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:20.04"],
+    "tags": [
+      "docker.io/gsmlg/dell-poweredge:v9.5.0",
+      "docker.io/gsmlg/dell-poweredge:latest"
+    ]
+  },
+  {
+    "name": "devdocs",
+    "workflow": {
+      "name": "docker-buildimage-devdocs",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "BUILD_MONTH=${{ steps.build-date.outputs.ym }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}",
+        "RUBY_VERSION=${{ steps.ruby-version.outputs.ruby-version }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ruby:$RUBY_VERSION"],
+    "tags": [
+      "docker.io/gsmlg/devdocs:${{ steps.build-date.outputs.date }}",
+      "ghcr.io/gsmlg-dev/devdocs:${{ steps.build-date.outputs.date }}",
+      "docker.io/gsmlg/devdocs:latest",
+      "ghcr.io/gsmlg-dev/devdocs:latest"
+    ]
+  },
+  {
+    "name": "echo",
+    "workflow": {
+      "name": "docker-buildimage-echo",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["docker.io/library/golang:alpine", "scratch"],
+    "tags": [
+      "docker.io/gsmlg/echo:latest",
+      "ghcr.io/gsmlg-dev/echo:latest"
+    ]
+  },
+  {
+    "name": "editor-server",
+    "workflow": {
+      "name": "docker-buildimage-editor-server",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "${{ github.event.inputs.platform }}",
+      "build_args": [
+        "CODE_SERVER_VERSION=${{ github.event.inputs.version }}",
+        "VERSION=${{ github.event.inputs.version }}",
+        "BUILD_MONTH=${{ steps.build-date.outputs.ym }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/editor-server:latest",
+      "docker.io/gsmlg/editor-server:latest",
+      "ghcr.io/gsmlg-dev/editor-server:v${{ github.event.inputs.version }}",
+      "docker.io/gsmlg/editor-server:v${{ github.event.inputs.version }}"
+    ]
+  },
+  {
+    "name": "geoip2",
+    "workflow": {
+      "name": "docker-buildimage-geoip2",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}",
+        "USER=${{ secrets.GIT_USER_ID }}",
+        "TOKEN=${{ secrets.GHCR_TOKEN }}",
+        "GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang",
+        "CGO_ENABLED=0",
+        "DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["docker.io/gsmlg/curl", "docker.io/library/golang:1.22", "scratch"],
+    "tags": [
+      "gsmlg/geoip2:${{ steps.build-date.outputs.date }}",
+      "ghcr.io/gsmlg-dev/geoip2:${{ steps.build-date.outputs.date }}",
+      "gsmlg/geoip2:latest",
+      "ghcr.io/gsmlg-dev/geoip2:latest"
+    ]
+  },
+  {
+    "name": "go-ethereum",
+    "workflow": {
+      "name": "docker-buildimage-go-ethereum",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["VERSION=v1.16.1"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["golang:alpine", "ghcr.io/gsmlg-dev/alpine:3.22"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/go-ethereum:latest",
+      "ghcr.io/gsmlg-dev/go-ethereum:v1.16.1"
+    ]
+  },
+  {
+    "name": "keycloak",
+    "workflow": {
+      "name": "docker-buildimage-keycloak",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "BUILD_MONTH=${{ steps.build-date.outputs.ym }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["quay.io/keycloak/keycloak:latest"],
+    "tags": [
+      "docker.io/gsmlg/keycloak:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/keycloak:latest",
+      "ghcr.io/gsmlg-dev/keycloak:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/keycloak:latest"
+    ]
+  },
+  {
+    "name": "kubectl",
+    "workflow": {
+      "name": "docker-buildimage-kubectl",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["KUBE_VERSION=${{ matrix.version }}"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["gsmlg/curl:latest", "alpine"],
+    "tags": [
+      "docker.io/gsmlg/kubectl:v${{ matrix.version }}",
+      "ghcr.io/gsmlg-dev/kubectl:v${{ matrix.version }}"
+    ]
+  },
+  {
+    "name": "log-forwarder",
+    "workflow": {
+      "name": "docker-buildimage-log-forwarder",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["golang:alpine", "scratch"],
+    "tags": [
+      "docker.io/gsmlg/log-forwarder:latest",
+      "ghcr.io/gsmlg-dev/log-forwarder:latest"
+    ]
+  },
+  {
+    "name": "mariadb",
+    "workflow": {
+      "name": "docker-buildimage-mariadb",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["MARIADB_VERSION=${{ matrix.version.ver }}"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:24.04"],
+    "tags": [
+      "docker.io/gsmlg/mariadb:${{ matrix.version.tag }}",
+      "ghcr.io/gsmlg-dev/mariadb:${{ matrix.version.tag }}"
+    ]
+  },
+  {
+    "name": "meshcentral",
+    "workflow": {
+      "name": "docker-buildimage-meshcentral",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "MESHCENTRAL2_VERSION=${{ steps.get-version.outputs.version }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["node:lts-slim"],
+    "tags": [
+      "docker.io/gsmlg/meshcentral:${{ steps.get-version.outputs.version }}",
+      "docker.io/gsmlg/meshcentral:latest",
+      "ghcr.io/gsmlg-dev/meshcentral:${{ steps.get-version.outputs.version }}",
+      "ghcr.io/gsmlg-dev/meshcentral:latest"
+    ]
+  },
+  {
+    "name": "nginx",
+    "workflow": {
+      "name": "docker-buildimage-nginx",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["debian:11", "alpine:3.16"],
+    "tags": [
+      "gsmlg/nginx:latest"
+    ]
+  },
+  {
+    "name": "nix-builder",
+    "workflow": {
+      "name": "docker-buildimage-nix-builder",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["nixos/nix"],
+    "tags": [
+      "docker.io/gsmlg/nix-builder:latest",
+      "ghcr.io/gsmlg-dev/nix-builder:latest"
+    ]
+  },
+  {
+    "name": "openssl",
+    "workflow": {
+      "name": "docker-buildimage-openssl",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:24.04"],
+    "tags": [
+      "ghcr.io/gsmlg-dev/openssl:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/openssl:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/openssl:latest",
+      "docker.io/gsmlg/openssl:latest"
+    ]
+  },
+  {
+    "name": "openwrt",
+    "workflow": {
+      "name": "docker-buildimage-openwrt",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ubuntu:20.04", "alpine"],
+    "tags": [
+      "docker.io/gsmlg/openwrt:21.02"
+    ]
+  },
+  {
+    "name": "pac-server",
+    "workflow": {
+      "name": "docker-buildimage-pac-server",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push", "workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["golang:alpine", "alpine:latest"],
+    "tags": [
+      "docker.io/gsmlg/pac-server:latest",
+      "ghcr.io/gsmlg-dev/pac-server:latest"
+    ]
+  },
+  {
+    "name": "phoenix",
+    "workflow": {
+      "name": "docker-buildimage-phoenix",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64",
+      "build_args": [
+        "ELIXIR_VERSION=${{ github.event.inputs.elixir-version }}",
+        "PHOENIX_VERSION=${{ github.event.inputs.phoenix-version }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["elixir:${ELIXIR_VERSION}-alpine", "elixir:${ELIXIR_VERSION}"],
+    "tags": [
+      "docker.io/gsmlg/phoenix:${{ github.event.inputs.phoenix-version }}",
+      "docker.io/gsmlg/phoenix:latest",
+      "ghcr.io/gsmlg-dev/phoenix:${{ github.event.inputs.phoenix-version }}",
+      "ghcr.io/gsmlg-dev/phoenix:latest"
+    ]
+  },
+  {
+    "name": "python",
+    "workflow": {
+      "name": "docker-buildimage-python",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": ["VERSION=${{ github.event.inputs.version }}"]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["python:$VERSION"],
+    "tags": [
+      "docker.io/gsmlg/python:${{ github.event.inputs.version }}",
+      "ghcr.io/gsmlg-dev/python:${{ github.event.inputs.version }}"
+    ]
+  },
+  {
+    "name": "rabbitmq",
+    "workflow": {
+      "name": "docker-buildimage-rabbitmq",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["rabbitmq:4-management"],
+    "tags": [
+      "docker.io/gsmlg/rabbitmq:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/rabbitmq:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/rabbitmq:latest",
+      "ghcr.io/gsmlg-dev/rabbitmq:latest"
+    ]
+  },
+  {
+    "name": "semantic-release",
+    "workflow": {
+      "name": "docker-buildimage-semantic-release",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["gcr.io/kaniko-project/executor:latest", "node:lts-alpine"],
+    "tags": [
+      "gsmlg/semantic-release:latest"
+    ]
+  },
+  {
+    "name": "snapdrop",
+    "workflow": {
+      "name": "docker-buildimage-snapdrop",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["node:lts-alpine"],
+    "tags": [
+      "docker.io/gsmlg/snapdrop:latest",
+      "ghcr.io/gsmlg-dev/snapdrop:latest"
+    ]
+  },
+  {
+    "name": "squid",
+    "workflow": {
+      "name": "docker-buildimage-squid",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20"],
+    "tags": [
+      "docker.io/gsmlg/squid:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/squid:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/squid:latest",
+      "ghcr.io/gsmlg-dev/squid:latest"
+    ]
+  },
+  {
+    "name": "stunnel",
+    "workflow": {
+      "name": "docker-buildimage-stunnel",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20"],
+    "tags": [
+      "docker.io/gsmlg/stunnel:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/stunnel:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/stunnel:latest",
+      "ghcr.io/gsmlg-dev/stunnel:latest"
+    ]
+  },
+  {
+    "name": "svg-autocrop",
+    "workflow": {
+      "name": "docker-buildimage-svg-autocrop",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["cimg/node:lts-browsers"],
+    "tags": [
+      "gsmlg/svg-autocrop:latest"
+    ]
+  },
+  {
+    "name": "tinyproxy",
+    "workflow": {
+      "name": "docker-buildimage-tinyproxy",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8,linux/arm/v7"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20"],
+    "tags": [
+      "gsmlg/tinyproxy:latest"
+    ]
+  },
+  {
+    "name": "unbound",
+    "workflow": {
+      "name": "docker-buildimage-unbound",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64"
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20"],
+    "tags": [
+      "docker.io/gsmlg/unbound:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/unbound:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/unbound:latest",
+      "ghcr.io/gsmlg-dev/unbound:latest"
+    ]
+  },
+  {
+    "name": "varnish",
+    "workflow": {
+      "name": "docker-buildimage-varnish",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push"],
+      "platforms": "linux/amd64,linux/arm64",
+      "build_args": [
+        "BUILD_MONTH=${{ steps.build-date.outputs.ym }}",
+        "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["varnish:alpine"],
+    "tags": [
+      "docker.io/gsmlg/varnish:${{ steps.build-date.outputs.ym }}",
+      "ghcr.io/gsmlg-dev/varnish:${{ steps.build-date.outputs.ym }}",
+      "docker.io/gsmlg/varnish:latest",
+      "ghcr.io/gsmlg-dev/varnish:latest"
+    ]
+  },
+  {
+    "name": "zerotier",
+    "workflow": {
+      "name": "docker-buildimage-zerotier",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "ZT_COMMIT=${{ github.event.inputs.git-ref }}",
+        "ZT_VERSION=${{ github.event.inputs.version }}"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["ghcr.io/gsmlg-dev/alpine:3.22"],
+    "tags": [
+      "docker.io/gsmlg/zerotier:${{ github.event.inputs.version }}",
+      "docker.io/gsmlg/zerotier:latest",
+      "ghcr.io/gsmlg-dev/zerotier:${{ github.event.inputs.version }}",
+      "ghcr.io/gsmlg-dev/zerotier:latest"
+    ]
+  },
+  {
+    "name": "zerotier-ui",
+    "workflow": {
+      "name": "docker-buildimage-zerotier-ui",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["push"],
+      "platforms": "linux/amd64,linux/arm64/v8",
+      "build_args": [
+        "ZT_UI_COMMIT=00592d9ad498c2ddb0569def3d65aff88773e55f",
+        "ZT_UI_VERSION=1.5.8"
+      ]
+    },
+    "dockerfile": "Dockerfile",
+    "dependencies": ["alpine:3.20", "node:lts-alpine"],
+    "tags": [
+      "docker.io/gsmlg/zerotier-ui:v1.5.8",
+      "docker.io/gsmlg/zerotier-ui:latest",
+      "ghcr.io/gsmlg-dev/zerotier-ui:v1.5.8",
+      "ghcr.io/gsmlg-dev/zerotier-ui:latest"
+    ]
+  }
+]
