@@ -18,17 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup GitHub CLI
         run: |
           gh auth status
         env:
-          GH_TOKEN: ${{ secrets.TRIGGER_TOKEN }}
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Trigger builds
         env:
-          GH_TOKEN: ${{ secrets.TRIGGER_TOKEN }}
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           IMAGE: ${{ github.event.inputs.image }}
           RERUN_FAILED: ${{ github.event.inputs.rerun_failed }}
         run: |
