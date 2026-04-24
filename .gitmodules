@@ -118,3 +118,6 @@
 [submodule "repos/pac-server"]
 	path = repos/pac-server
 	url = https://github.com/gsmlg-ci/pac-server.git
+[submodule "repos/antigravity-claude-proxy"]
+	path = repos/antigravity-claude-proxy
+	url = https://github.com/gsmlg-ci/antigravity-claude-proxy.git

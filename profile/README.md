@@ -22,6 +22,7 @@ All images are published to:
 | Image | Docker Hub | GHCR | Build Status |
 |-------|------------|------|--------------|
 | [alpine](https://github.com/gsmlg-ci/alpine) | `gsmlg/alpine` | `ghcr.io/gsmlg-dev/alpine` | [![Build](https://github.com/gsmlg-ci/alpine/actions/workflows/build.yml/badge.svg)](https://github.com/gsmlg-ci/alpine/actions/workflows/build.yml) |
+| [antigravity-claude-proxy](https://github.com/gsmlg-ci/antigravity-claude-proxy) | `gsmlg/antigravity-claude-proxy` | `ghcr.io/gsmlg-dev/antigravity-claude-proxy` | [![Build](https://github.com/gsmlg-ci/antigravity-claude-proxy/actions/workflows/build.yml/badge.svg)](https://github.com/gsmlg-ci/antigravity-claude-proxy/actions/workflows/build.yml) |
 | [antlr](https://github.com/gsmlg-ci/antlr) | `gsmlg/antlr` | `ghcr.io/gsmlg-dev/antlr` | [![Build](https://github.com/gsmlg-ci/antlr/actions/workflows/build.yml/badge.svg)](https://github.com/gsmlg-ci/antlr/actions/workflows/build.yml) |
 | [baidupcs-go](https://github.com/gsmlg-ci/baidupcs-go) | `gsmlg/baidupcs-go` | `ghcr.io/gsmlg-dev/baidupcs-go` | [![Build](https://github.com/gsmlg-ci/baidupcs-go/actions/workflows/build.yml/badge.svg)](https://github.com/gsmlg-ci/baidupcs-go/actions/workflows/build.yml) |
 | [build-base](https://github.com/gsmlg-ci/build-base) | `gsmlg/build-base` | `ghcr.io/gsmlg-dev/build-base` | [![Build](https://github.com/gsmlg-ci/build-base/actions/workflows/build.yml/badge.svg)](https://github.com/gsmlg-ci/build-base/actions/workflows/build.yml) |

@@ -9,7 +9,7 @@ ORG="gsmlg-ci"
 
 # All Docker image repositories
 IMAGES=(
-  alpine antlr baidupcs-go build-base caddy code-server
+  alpine antigravity-claude-proxy antlr baidupcs-go build-base caddy code-server
   couch-alpine couchdb curl daedalos dell-openmanage dell-poweredge
   devdocs echo editor-server geoip2 go-ethereum keycloak
   kubectl log-forwarder mariadb meshcentral nginx nix-builder
