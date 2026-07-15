@@ -441,6 +441,23 @@
     ]
   },
   {
+    "name": "open-design",
+    "workflow": {
+      "name": "docker-buildimage-open-design",
+      "file": ".github/workflows/build.yml",
+      "triggers": ["schedule", "push", "workflow_dispatch"],
+      "platforms": "linux/amd64,linux/arm64"
+    },
+    "dockerfile": "deploy/Dockerfile",
+    "dependencies": ["node:24-alpine"],
+    "tags": [
+      "docker.io/gsmlg/open-design:v${{ steps.open-design-version.outputs.version }}",
+      "docker.io/gsmlg/open-design:latest",
+      "ghcr.io/gsmlg-dev/open-design:v${{ steps.open-design-version.outputs.version }}",
+      "ghcr.io/gsmlg-dev/open-design:latest"
+    ]
+  },
+  {
     "name": "openwrt",
     "workflow": {
       "name": "docker-buildimage-openwrt",
